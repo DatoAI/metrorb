@@ -1,5 +1,2 @@
-require 'metrror/version'
-
-module Metrror
-  # Your code goes here...
-end
+require 'metrics/metric'
+require 'metrics/mean_absolute_error'

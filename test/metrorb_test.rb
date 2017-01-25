@@ -15,6 +15,14 @@ class MeanAbsoluteErrorTest < Minitest::Test
 end
 
 class CaclulateTest < Minitest::Test
+  def test_it_hides_the_initializer
+    assert_raises { Metrorb::Calculate.new([1, 2], [3, 4]) }
+  end
+
+  def test_it_validates_the_arrays_size
+    assert_raises { Metrorb::Calculate.from_arrays([1, 2], [1, 2, 3]) }
+  end
+
   def test_it_calculates_mae_from_arrays
     assert_equal 0.0, calc_from_arrays(:mae, [   0,    0,    0,     0,      0], [   0,    0,    0,     0,      0])
     assert_equal 0.0, calc_from_arrays(:mae, [   4,    2,    3,     8,     20], [   4,    2,    3,     8,     20])

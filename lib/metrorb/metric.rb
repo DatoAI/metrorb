@@ -1,4 +1,4 @@
-module Metrror
+module Metrorb
   class Metric
     def initialize(orig, pred)
       @orig = orig

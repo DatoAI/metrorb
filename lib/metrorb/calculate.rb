@@ -1,4 +1,4 @@
-module Metrror
+module Metrorb
   class Calculate
     def self.from_arrays(orig, pred)
       raise ArgumentError.new("The measured arrays should have the same size!") if orig.size != pred.size

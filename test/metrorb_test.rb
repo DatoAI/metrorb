@@ -10,7 +10,7 @@ class MeanAbsoluteErrorTest < Minitest::Test
   end
 
   def calc_mae(pred, orig)
-    Metrror::MeanAbsoluteError.new(pred, orig).measure
+    Metrorb::MeanAbsoluteError.new(pred, orig).measure
   end
 end
 
@@ -24,6 +24,6 @@ class CaclulateTest < Minitest::Test
   end
 
   def calc_from_arrays(metric, orig, pred)
-    Metrror::Calculate.from_arrays(orig, pred).send(metric)
+    Metrorb::Calculate.from_arrays(orig, pred).send(metric)
   end
 end

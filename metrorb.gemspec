@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'metrror/version'
+require 'metrorb/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'metrror'
-  spec.version       = Metrror::VERSION
+  spec.name          = 'metrorb'
+  spec.version       = Metrorb::VERSION
   spec.authors       = ['Oscar Esgalha']
   spec.email         = ['oscaresgalha@gmail.com']
 
   spec.summary       = 'A collection of error metrics'
-  spec.homepage      = 'https://github.com/oesgalha/metrror'
+  spec.homepage      = 'https://github.com/oesgalha/metrorb'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

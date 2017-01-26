@@ -1,3 +1,6 @@
+require 'bigdecimal'
+require 'bigdecimal/util'
+
 module Metrorb
   class Calculate
     def self.from_arrays(orig, pred)
@@ -5,8 +8,8 @@ module Metrorb
       new(orig, pred)
     end
 
-    def self.from_csvs
-
+    def self.from_csvs(csv1, csv2, options = {})
+      from_arrays(*CsvExtractor.new(csv1, csv2, options).extract_arrays)
     end
 
     def mae
@@ -19,8 +22,8 @@ module Metrorb
     private_class_method :new
 
     def initialize(orig, pred)
-      @orig = orig
-      @pred = pred
+      @orig = orig.map(&:to_d)
+      @pred = pred.map(&:to_d)
     end
   end
 end

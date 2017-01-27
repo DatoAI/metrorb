@@ -1,6 +1,10 @@
 # Metrorb
+[![Code Climate](https://codeclimate.com/github/oesgalha/metrorb/badges/gpa.svg)](https://codeclimate.com/github/oesgalha/metrorb)
+[![Test Coverage](https://codeclimate.com/github/oesgalha/metrorb/badges/coverage.svg)](https://codeclimate.com/github/oesgalha/metrorb/coverage)
 
 **MET**rics er**RO**r for **R**u**B**y
+
+Metrorb is a collection of error metrics.
 
 ## Installation
 
@@ -24,7 +28,7 @@ TODO: Write usage instructions here
 
 ## Development
 
-TODO
+This gem has no dependecies. Use `rake` to run tests and hack away.
 
 ## Contributing
 

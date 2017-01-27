@@ -42,6 +42,11 @@ class CalculateTest < Minitest::Test
     assert_equal 2.0, Metrorb::Calculate.from_csvs(csv_io('custom_label_orig.csv'), csv_io('custom_label_pred.csv'), id: :customidentifier, value: :customlabelvalue).mae
   end
 
+  def test_it_throws_an_error_if_the_prediction_csv_miss_ids
+    error = assert_raises { Metrorb::Calculate.from_csvs(csv_io('bad_orig.csv'), csv_io('bad_pred.csv')) }
+    assert_equal [5], error.ids
+  end
+
   def calc_from_arrays(metric, orig, pred)
     Metrorb::Calculate.from_arrays(orig, pred).send(metric)
   end
@@ -69,5 +74,10 @@ class CsvExtractorTest < Minitest::Test
     messed_label_csv = Metrorb::CsvExtractor.new(csv_io('custom_label_orig.csv'), csv_io('custom_label_pred.csv'), id: :customidentifier, value: :customlabelvalue).extract_arrays
     assert_equal [2, 3, 5, 7, 11], messed_label_csv[0]
     assert_equal [4, 4, 8, 9, 13], messed_label_csv[1]
+  end
+
+  def test_it_shows_missing_ids_in_prediction_csv
+    assert_equal [], Metrorb::CsvExtractor.new(csv_io('orig1.csv'), csv_io('pred1.csv')).missing_ids
+    assert_equal [5], Metrorb::CsvExtractor.new(csv_io('bad_orig.csv'), csv_io('bad_pred.csv')).missing_ids
   end
 end

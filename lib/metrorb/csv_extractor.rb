@@ -18,6 +18,10 @@ module Metrorb
       return @table[@opts[:value]], @table[:value2]
     end
 
+    def missing_ids
+      @missing_ids ||= @table.select { |row| row[:value2].nil? }.map { |row| row[:id] }
+    end
+
     private
 
     # O(n²)

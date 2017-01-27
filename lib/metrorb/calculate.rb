@@ -9,7 +9,12 @@ module Metrorb
     end
 
     def self.from_csvs(csv1, csv2, options = {})
-      from_arrays(*CsvExtractor.new(csv1, csv2, options).extract_arrays)
+      extractor = CsvExtractor.new(csv1, csv2, options)
+      if extractor.missing_ids.empty?
+        from_arrays(*extractor.extract_arrays)
+      else
+        raise BadCsvError.new(extractor.missing_ids)
+      end
     end
 
     def mae
@@ -24,6 +29,18 @@ module Metrorb
     def initialize(orig, pred)
       @orig = orig.map(&:to_d)
       @pred = pred.map(&:to_d)
+    end
+  end
+
+  class BadCsvError < StandardError
+    attr_reader :ids
+
+    def initialize(ids = nil)
+      @ids = ids
+    end
+
+    def to_s
+      "Missing IDs in the prediction csv: #{@ids}"
     end
   end
 end

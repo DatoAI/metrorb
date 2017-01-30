@@ -4,12 +4,12 @@ require 'bigdecimal/util'
 module Metrorb
   class Calculate
     def self.from_arrays(orig, pred)
-      raise ArgumentError.new("The measured arrays must have the same size!") if orig.size != pred.size
+      raise ArgumentError.new("The original and prediction arrays must have the same size!") if orig.size != pred.size
       new(orig, pred)
     end
 
-    def self.from_csvs(csv1, csv2, options = {})
-      extractor = CsvExtractor.new(csv1, csv2, options)
+    def self.from_csvs(orig, pred, options = {})
+      extractor = CsvExtractor.new(orig, pred, options)
       if extractor.missing_ids.empty?
         from_arrays(*extractor.extract_arrays)
       else
@@ -39,13 +39,7 @@ module Metrorb
 
   class BadCsvError < StandardError
     attr_reader :ids
-
-    def initialize(ids = nil)
-      @ids = ids
-    end
-
-    def to_s
-      "Missing IDs in the prediction csv: #{@ids}"
-    end
+    def initialize(ids = nil); @ids = ids; end
+    def to_s; "Missing IDs in the prediction csv: #{@ids}"; end
   end
 end

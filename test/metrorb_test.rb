@@ -11,7 +11,7 @@ class CalculateTest < Minitest::Test
 
   def test_it_validates_the_arrays_size
     error = assert_raises { Metrorb::Calculate.from_arrays([1, 2], [1, 2, 3]) }
-    assert_equal 'The measured arrays must have the same size!', error.to_s
+    assert_equal 'The original and prediction arrays must have the same size!', error.to_s
   end
 
   def test_it_calculates_accuracy_from_arrays

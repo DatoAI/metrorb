@@ -1,4 +1,5 @@
 require 'metrorb/metric'
+require 'metrorb/metrics/accuracy'
 require 'metrorb/metrics/mean_absolute_error'
 require 'csv'
 require 'metrorb/csv_extractor'

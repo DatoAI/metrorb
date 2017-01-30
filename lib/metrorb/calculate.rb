@@ -18,9 +18,14 @@ module Metrorb
     end
 
     def mae
-      MeanAbsoluteError.new(@orig, @pred).measure
+      Metrics::MeanAbsoluteError.new(@orig, @pred).measure
     end
     alias mean_absolute_error mae
+
+    def acc
+      Metrics::Accuracy.new(@orig, @pred).measure
+    end
+    alias accuracy mae
 
     private
 

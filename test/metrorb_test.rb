@@ -4,27 +4,21 @@ def csv_io(name)
   File.open(File.join(File.expand_path('../data', __FILE__), name))
 end
 
-class MeanAbsoluteErrorTest < Minitest::Test
-  def test_it_calculates_correctly
-    assert_equal 0.0, calc_mae([   0,    0,    0,     0,      0], [   0,    0,    0,     0,      0])
-    assert_equal 0.0, calc_mae([   4,    2,    3,     8,     20], [   4,    2,    3,     8,     20])
-    assert_equal 0.0, calc_mae([43.5, 12.3, 98.7, 107.2, 502.33], [43.5, 12.3, 98.7, 107.2, 502.33])
-    assert_equal 4.4, calc_mae([  44,   17,   33,    21,     57], [  48,   12,   35,    28,     53])
-    assert_equal 3.0, calc_mae([  38,   42,   47,    55],         [  40,   40,   50,    50])
-  end
-
-  def calc_mae(pred, orig)
-    Metrorb::MeanAbsoluteError.new(pred, orig).measure
-  end
-end
-
 class CalculateTest < Minitest::Test
   def test_it_hides_the_initializer
     assert_raises { Metrorb::Calculate.new([1, 2], [3, 4]) }
   end
 
   def test_it_validates_the_arrays_size
-    assert_raises { Metrorb::Calculate.from_arrays([1, 2], [1, 2, 3]) }
+    error = assert_raises { Metrorb::Calculate.from_arrays([1, 2], [1, 2, 3]) }
+    assert_equal 'The measured arrays must have the same size!', error.to_s
+  end
+
+  def test_it_calculates_accuracy_from_arrays
+    assert_equal 0.2, calc_from_arrays(:acc, [1, 0, 0, 0, 0], [1, 1, 1, 1, 1])
+    assert_equal 0.4, calc_from_arrays(:acc, [1, 1, 0, 0, 0], [1, 1, 1, 1, 1])
+    assert_equal 0.6, calc_from_arrays(:acc, [1, 1, 1, 0, 0], [1, 1, 1, 1, 1])
+    assert_equal 0.8, calc_from_arrays(:acc, [1, 1, 1, 1, 0], [1, 1, 1, 1, 1])
   end
 
   def test_it_calculates_mae_from_arrays
@@ -45,6 +39,7 @@ class CalculateTest < Minitest::Test
   def test_it_throws_an_error_if_the_prediction_csv_miss_ids
     error = assert_raises { Metrorb::Calculate.from_csvs(csv_io('bad_orig.csv'), csv_io('bad_pred.csv')) }
     assert_equal [5], error.ids
+    assert_equal 'Missing IDs in the prediction csv: [5]', error.to_s
   end
 
   def calc_from_arrays(metric, orig, pred)

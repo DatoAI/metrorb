@@ -1,0 +1,6 @@
+---
+en:
+  metrorb:
+    metrics:
+      acc: "Accuracy"
+      mae: "Mean Absolute Error"

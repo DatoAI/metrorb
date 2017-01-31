@@ -1,0 +1,6 @@
+---
+pt-BR:
+  metrorb:
+    metrics:
+      acc: "Acurácia"
+      mae: "Média dos Errors Absolutos"

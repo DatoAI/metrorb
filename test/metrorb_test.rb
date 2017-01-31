@@ -5,6 +5,8 @@ def csv_io(name)
 end
 
 class CalculateTest < Minitest::Test
+  parallelize_me!
+
   def test_it_hides_the_initializer
     assert_raises { Metrorb::Calculate.new([1, 2], [3, 4]) }
   end
@@ -48,6 +50,8 @@ class CalculateTest < Minitest::Test
 end
 
 class CsvExtractorTest < Minitest::Test
+  parallelize_me!
+
   def test_it_extract_arrays_from_commom_csv
     ordered_csvs = Metrorb::CsvExtractor.new(csv_io('orig1.csv'), csv_io('pred1.csv')).extract_arrays
     assert_equal [2, 3, 5, 7, 11], ordered_csvs[0]
@@ -74,5 +78,29 @@ class CsvExtractorTest < Minitest::Test
   def test_it_shows_missing_ids_in_prediction_csv
     assert_equal [], Metrorb::CsvExtractor.new(csv_io('orig1.csv'), csv_io('pred1.csv')).missing_ids
     assert_equal [5], Metrorb::CsvExtractor.new(csv_io('bad_orig.csv'), csv_io('bad_pred.csv')).missing_ids
+  end
+end
+
+# =============
+# Metrics tests
+# =============
+
+class AccuracyTest < Minitest::Test
+  def test_it_has_a_name
+    assert_equal 'Accuracy', Metrorb::Metrics::Accuracy.name
+  end
+
+  def test_it_has_a_sort_direction
+    assert_equal :desc, Metrorb::Metrics::Accuracy.sort_direction
+  end
+end
+
+class MeanAbsoluteErrorTest < Minitest::Test
+  def test_it_has_a_name
+    assert_equal 'Mean Absolute Error', Metrorb::Metrics::MeanAbsoluteError.name
+  end
+
+  def test_it_has_a_sort_direction
+    assert_equal :asc, Metrorb::Metrics::MeanAbsoluteError.sort_direction
   end
 end

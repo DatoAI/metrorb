@@ -21,6 +21,12 @@ module Metrorb
     ]
   end
 
+  def self.metrics_hash
+    metrics.each_with_object({}) do |metric, h|
+      h[metric.abbr] = metric
+    end
+  end
+
   def self.metrics_name
     metrics.map(&:name)
   end

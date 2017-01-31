@@ -95,6 +95,13 @@ class MetrorbModuleTest < Minitest::Test
   def test_it_has_a_hash_with_abbrs_and_ids
     assert_equal({ mae: 0, acc: 1 }, Metrorb.metrics_abbr_and_id)
   end
+
+  def test_it_has_a_hash_with_the_metrics_classes
+    assert_equal({
+      acc: Metrorb::Metrics::Accuracy,
+      mae: Metrorb::Metrics::MeanAbsoluteError
+      }, Metrorb.metrics_hash)
+  end
 end
 
 # =============

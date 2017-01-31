@@ -81,6 +81,22 @@ class CsvExtractorTest < Minitest::Test
   end
 end
 
+class MetrorbModuleTest < Minitest::Test
+  parallelize_me!
+
+  def test_it_has_a_list_of_names
+    assert_equal ['Accuracy', 'Mean Absolute Error'], Metrorb.metrics_name
+  end
+
+  def test_it_has_a_list_with_names_and_abbrs
+    assert_equal [['Accuracy', :acc], ['Mean Absolute Error', :mae]], Metrorb.metrics_name_and_abbr
+  end
+
+  def test_it_has_a_hash_with_abbrs_and_ids
+    assert_equal({ mae: 0, acc: 1 }, Metrorb.metrics_abbr_and_id)
+  end
+end
+
 # =============
 # Metrics tests
 # =============

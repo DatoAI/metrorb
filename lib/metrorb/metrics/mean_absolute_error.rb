@@ -5,6 +5,14 @@ module Metrorb
         reduce_pair { |sum, orig, pred| sum + (orig - pred).abs } / @len.to_f
       end
 
+      def self.abbr
+        :mae
+      end
+
+      def self.id
+        0
+      end
+
       def self.name
         Metrorb::USE_I18N ? ::I18n.t('metrorb.metrics.mae') : 'Mean Absolute Error'
       end

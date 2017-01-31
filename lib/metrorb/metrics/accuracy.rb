@@ -5,6 +5,14 @@ module Metrorb
         reduce_pair { |sum, orig, pred| sum + (orig == pred ? 1 : 0) } / @len.to_f
       end
 
+      def self.abbr
+        :acc
+      end
+
+      def self.id
+        1
+      end
+
       def self.name
         Metrorb::USE_I18N ? ::I18n.t('metrorb.metrics.acc') : 'Accuracy'
       end

@@ -45,7 +45,7 @@ prediction = [48, 12, 35, 28, 53]
 
 begin
   calc = Metrorb::Calculate.from_arrays(original, prediction)
-rescue e => ArgumentError
+rescue ArgumentError => e
   puts e.to_s # => The original and prediction arrays must have the same size!
 end
 ```
@@ -70,7 +70,77 @@ See below a list with the implemented metrics.
 
 This gem can also deal directly with csv files that contains the original and prediction data. The workflow is similar to working with arrays.
 
-TODO: continue csv doc
+The expected csv files must have only 2 columns: one with an identifier and other with the value.
+
+For instance, this is a valid csv file:
+```
+id,value
+1,2
+2,3
+3,5
+4,7
+5,11
+```
+
+To calculate a metric you will need two csv files like the one showed above: one with the original data and one with the prediction data.
+
+The `Calculate` object will pass the two first parameters down to the standard CSV ruby library, so it accepts either a string or an IO object.
+
+Here is some code with basic usage:
+
+```ruby
+require 'metrorb'
+
+orig_csv = File.open("my/data/path/orig.csv")
+pred_csv = File.open("my/data/path/pred.csv")
+
+calc = Metrorb::Calculate.from_csvs(orig_csv, pred_csv)
+calc.mae # => 4.4
+```
+
+If your csv have custom labels for the id and/or value you can specify them passing some options to the `from_csvs`:
+```ruby
+calc = Metrorb::Calculate.from_csvs(orig_csv, pred_csv, id: :custom_identifer, value: :custom_value_label)
+```
+
+The code above will expect a csv file like this:
+```
+custom_identifer,custom_value_label
+1,2
+2,3
+3,5
+4,7
+5,11
+```
+
+The `from_csvs` method will ignore trailing spaces, expect all the rows (except the header) to be numeric and apply some transformations to the header labels:
+
+> The header String is downcased, spaces are replaced with underscores, non-word characters are dropped, and finally to_sym() is called.
+
+This is done with the [:symbol HeaderConverter](http://ruby-doc.org/stdlib-2.4.0/libdoc/csv/rdoc/CSV.html#HeaderConverters) from ruby CSV standard library.
+
+This makes the `from_csvs` method more permissive and ignore small formating errors. The following headers are treated equally:
+```
+custom_identifer,custom_value_label
+Custom Identifier, Custom Value label
+   custom identIfier, custom vaLue Label
+```
+
+If the prediction csv file don't contain all the ids from the original dataset csv file, the `from_csvs` method will raise an error. You can check which ids are missing when you rescue the error:
+```ruby
+require 'metrorb'
+
+orig_csv = File.open("my/data/path/orig.csv")
+pred_csv = File.open("my/data/path/pred.csv")
+
+begin
+  calc = Metrorb::Calculate.from_csvs(orig_csv, pred_csv)
+  calc.mae # => 4.4
+rescue Metrorb::BadCsvError => e
+  puts e.ids    # => [1, 2, 3]
+  puts e.to_s   # => Missing IDs in the prediction csv: [1, 2, 3]
+end
+```
 
 ### Available Metrics
 
@@ -78,6 +148,7 @@ TODO: continue csv doc
 |-------------------|------|---------------------|
 |Accuracy           |`acc` |`accuracy`           |
 |Mean Absolute Error|`mae` |`mean_absolute_error`|
+
 
 ## Development
 
@@ -87,7 +158,14 @@ This gem has no dependecies. Use `rake` to run tests and hack away.
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/oesgalha/metrorb. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
-
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+## TODO
+
+* Treat case where csv have more/wrong columns
+* Add info in the README about I18n.
+* Add info in the README about Metrorb helper methods
+* Generate some docs
+* Publish 0.1 to rubygems

@@ -62,7 +62,15 @@ calc.mae # => 4.4
 ```
 
 Another example, with ``Accuracy``:
+```ruby
+require 'metrorb'
 
+original =   [1, 1, 0, 0, 0]
+prediction = [1, 1, 1, 1, 1]
+
+calc = Metrorb::Calculate.from_arrays(original, prediction)
+calc.acc # => 0.4
+```
 
 See below a list with the implemented metrics.
 
@@ -71,6 +79,8 @@ See below a list with the implemented metrics.
 This gem can also deal directly with csv files that contains the original and prediction data. The workflow is similar to working with arrays.
 
 The expected csv files must have only 2 columns: one with an identifier and other with the value.
+
+By default it will expect the columns headers to be "id" and "value".
 
 For instance, this is a valid csv file:
 ```
@@ -135,7 +145,6 @@ pred_csv = File.open("my/data/path/pred.csv")
 
 begin
   calc = Metrorb::Calculate.from_csvs(orig_csv, pred_csv)
-  calc.mae # => 4.4
 rescue Metrorb::BadCsvError => e
   puts e.ids    # => [1, 2, 3]
   puts e.to_s   # => Missing IDs in the prediction csv: [1, 2, 3]

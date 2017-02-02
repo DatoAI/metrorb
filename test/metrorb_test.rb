@@ -78,6 +78,7 @@ class CsvExtractorTest < Minitest::Test
   def test_it_shows_missing_ids_in_prediction_csv
     assert_equal [], Metrorb::CsvExtractor.new(csv_io('orig1.csv'), csv_io('pred1.csv')).missing_ids
     assert_equal [5], Metrorb::CsvExtractor.new(csv_io('bad_orig.csv'), csv_io('bad_pred.csv')).missing_ids
+    assert_equal [5], Metrorb::CsvExtractor.new(csv_io('bad_orig_w_custom_label.csv'), csv_io('bad_pred_w_custom_label.csv'), id: :customidentifier, value: :customlabelvalue).missing_ids
   end
 end
 

@@ -10,16 +10,17 @@ module Metrorb
     }
 
     def initialize(csv1, csv2, options = {})
-      @opts = LABELS.merge(options)
+      opts = LABELS.merge(options)
+      @id, @val1, @val2 = opts[:id], opts[:value], :value2
       @table = merge(CSV.new(csv1, CSV_OPT).read, CSV.new(csv2, CSV_OPT).read)
     end
 
     def extract_arrays
-      return @table[@opts[:value]], @table[:value2]
+      return @table[@val1], @table[@val2]
     end
 
     def missing_ids
-      @missing_ids ||= @table.select { |row| row[:value2].nil? }.map { |row| row[:id] }
+      @missing_ids ||= @table.select { |r| r[@val2].nil? }.map { |r| r[@id] }
     end
 
     private
@@ -28,8 +29,8 @@ module Metrorb
     def merge(left, right)
       left.each do |lrow|
         right.each do |rrow|
-          if rrow[@opts[:id]] == lrow[@opts[:id]]
-            lrow << [:value2, rrow[@opts[:value]]]
+          if rrow[@id] == lrow[@id]
+            lrow << [@val2, rrow[@val1]]
             next
           end
         end

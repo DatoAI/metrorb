@@ -1,6 +1,7 @@
 require 'metrorb/metric'
 require 'metrorb/metrics/accuracy'
 require 'metrorb/metrics/mean_absolute_error'
+require 'metrorb/metrics/f1_score'
 require 'csv'
 require 'metrorb/csv_extractor'
 require 'metrorb/calculate'
@@ -17,7 +18,8 @@ module Metrorb
   def self.metrics
     [
       Metrorb::Metrics::Accuracy,
-      Metrorb::Metrics::MeanAbsoluteError
+      Metrorb::Metrics::MeanAbsoluteError,
+      Metrorb::Metrics::F1Score
     ]
   end
 

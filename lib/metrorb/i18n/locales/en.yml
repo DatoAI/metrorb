@@ -4,3 +4,4 @@ en:
     metrics:
       acc: "Accuracy"
       mae: "Mean Absolute Error"
+      f1s: "F1 Score"

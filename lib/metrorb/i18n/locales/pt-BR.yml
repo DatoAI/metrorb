@@ -4,3 +4,4 @@ pt-BR:
     metrics:
       acc: "Acurácia"
       mae: "Média dos Errors Absolutos"
+      f1s: "Pontuação F1"

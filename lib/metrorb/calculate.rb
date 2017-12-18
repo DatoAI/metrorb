@@ -27,6 +27,11 @@ module Metrorb
     end
     alias accuracy mae
 
+    def f1s
+      Metrics::F1Score.new(@orig, @pred).measure
+    end
+    alias f1_score f1s
+
     private
 
     private_class_method :new

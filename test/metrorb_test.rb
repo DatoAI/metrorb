@@ -22,13 +22,19 @@ class CalculateTest < Minitest::Test
     assert_equal 0.6, calc_from_arrays(:acc, [1, 1, 1, 0, 0], [1, 1, 1, 1, 1])
     assert_equal 0.8, calc_from_arrays(:acc, [1, 1, 1, 1, 0], [1, 1, 1, 1, 1])
   end
-
+  
   def test_it_calculates_mae_from_arrays
     assert_equal 0.0, calc_from_arrays(:mae, [   0,    0,    0,     0,      0], [   0,    0,    0,     0,      0])
     assert_equal 0.0, calc_from_arrays(:mae, [   4,    2,    3,     8,     20], [   4,    2,    3,     8,     20])
     assert_equal 0.0, calc_from_arrays(:mae, [43.5, 12.3, 98.7, 107.2, 502.33], [43.5, 12.3, 98.7, 107.2, 502.33])
     assert_equal 4.4, calc_from_arrays(:mae, [  44,   17,   33,    21,     57], [  48,   12,   35,    28,     53])
     assert_equal 3.0, calc_from_arrays(:mae, [  38,   42,   47,    55],         [  40,   40,   50,    50])
+  end
+
+  def test_it_calculates_f1score_from_arrays
+    assert_equal 0.75, calc_from_arrays(:f1s, [0, 1, 1, 0, 1] , [1, 1, 1, 0, 1])
+    assert_equal 1.0, calc_from_arrays(:f1s, [1, 1, 0, 0, 0] , [1, 1, 0, 0, 0])
+    assert_equal 0.50, calc_from_arrays(:f1s, [1, 1, 0, 0, 0] , [1, 1, 1, 1, 0])
   end
 
   def test_it_calculates_mae_from_csvs
@@ -86,21 +92,22 @@ class MetrorbModuleTest < Minitest::Test
   parallelize_me!
 
   def test_it_has_a_list_of_names
-    assert_equal ['Accuracy', 'Mean Absolute Error'], Metrorb.metrics_name
+    assert_equal ['Accuracy', 'Mean Absolute Error', 'F1 Score'], Metrorb.metrics_name
   end
 
   def test_it_has_a_list_with_names_and_abbrs
-    assert_equal [['Accuracy', :acc], ['Mean Absolute Error', :mae]], Metrorb.metrics_name_and_abbr
+    assert_equal [['Accuracy', :acc], ['Mean Absolute Error', :mae], ['F1 Score', :f1s]], Metrorb.metrics_name_and_abbr
   end
 
   def test_it_has_a_hash_with_abbrs_and_ids
-    assert_equal({ mae: 0, acc: 1 }, Metrorb.metrics_abbr_and_id)
+    assert_equal({ mae: 0, acc: 1, f1s: 2 }, Metrorb.metrics_abbr_and_id)
   end
 
   def test_it_has_a_hash_with_the_metrics_classes
     assert_equal({
       acc: Metrorb::Metrics::Accuracy,
-      mae: Metrorb::Metrics::MeanAbsoluteError
+      mae: Metrorb::Metrics::MeanAbsoluteError,
+      f1s: Metrorb::Metrics::F1Score
       }, Metrorb.metrics_hash)
   end
 end

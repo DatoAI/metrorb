@@ -1,7 +1,7 @@
 # Metrorb
-[![Build Status](https://travis-ci.org/oesgalha/metrorb.svg?branch=master)](https://travis-ci.org/oesgalha/metrorb)
-[![Code Climate](https://codeclimate.com/github/oesgalha/metrorb/badges/gpa.svg)](https://codeclimate.com/github/oesgalha/metrorb)
-[![Test Coverage](https://codeclimate.com/github/oesgalha/metrorb/badges/coverage.svg)](https://codeclimate.com/github/oesgalha/metrorb/coverage)
+[![Build Status](https://travis-ci.org/DatoAI/metrorb.svg?branch=master)](https://travis-ci.org/DatoAI/metrorb)
+[![Maintainability](https://api.codeclimate.com/v1/badges/455c3ddc62e1352e8e8a/maintainability)](https://codeclimate.com/github/DatoAI/metrorb/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/455c3ddc62e1352e8e8a/test_coverage)](https://codeclimate.com/github/DatoAI/metrorb/test_coverage)
 
 **MET**rics er**RO**r for **R**u**B**y
 
@@ -12,7 +12,7 @@ Metrorb is ruby gem (library) with a collection of statistics error metrics.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'metrorb', git: 'https://github.com/oesgalha/metrorb.git'
+gem 'metrorb', git: 'https://github.com/DatoAI/metrorb.git'
 ```
 
 And then execute:
@@ -157,6 +157,7 @@ end
 |-------------------|------|---------------------|
 |Accuracy           |`acc` |`accuracy`           |
 |Mean Absolute Error|`mae` |`mean_absolute_error`|
+|F1 Score           |`f1s` |`f1_score`           | 
 
 
 ## Development

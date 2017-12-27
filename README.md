@@ -72,6 +72,17 @@ calc = Metrorb::Calculate.from_arrays(original, prediction)
 calc.acc # => 0.4
 ```
 
+Another example, with ``F1 Score``:
+```ruby
+require 'metrorb'
+
+original =   [0, 1, 1, 0, 1]
+prediction = [1, 1, 1, 0, 1]
+
+calc = Metrorb::Calculate.from_arrays(original, prediction)
+calc.f1s # => 0.75
+```
+
 See below a list with the implemented metrics.
 
 ### Working with CSV files
@@ -166,7 +177,7 @@ This gem has no dependecies. Use `rake` to run tests and hack away.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/oesgalha/metrorb. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/DatoAI/metrorb. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 

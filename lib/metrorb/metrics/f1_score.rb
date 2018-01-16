@@ -3,8 +3,7 @@ module Metrorb
     class F1Score < Metric
       def measure
         $positive_class = 0
-        reduce_pair { |sum, orig, pred| 
-          $positive_class += 1 if pred == 1 
+        reduce_pair { |sum, orig, pred| $positive_class += 1 if pred == 1 
           sum + ((pred == 1 && orig == pred) ? 1 : 0)
         } / $positive_class.to_f
       end

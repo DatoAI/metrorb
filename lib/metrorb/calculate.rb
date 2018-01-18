@@ -25,7 +25,7 @@ module Metrorb
     def acc
       Metrics::Accuracy.new(@orig, @pred).measure
     end
-    alias accuracy mae
+    alias accuracy acc
 
     def f1s
       Metrics::F1Score.new(@orig, @pred).measure

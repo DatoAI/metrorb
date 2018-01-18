@@ -86,6 +86,26 @@ class CsvExtractorTest < Minitest::Test
     assert_equal [5], Metrorb::CsvExtractor.new(csv_io('bad_orig.csv'), csv_io('bad_pred.csv')).missing_ids
     assert_equal [5], Metrorb::CsvExtractor.new(csv_io('bad_orig_w_custom_label.csv'), csv_io('bad_pred_w_custom_label.csv'), id: :customidentifier, value: :customlabelvalue).missing_ids
   end
+
+  def test_csv
+    orig_csv = csv_io('orig1.csv')
+    pred_csv = csv_io('pred1.csv')
+    
+    calc = Metrorb::Calculate.from_csvs(orig_csv, pred_csv)
+    assert_equal 1.0, calc.acc
+    assert_equal 0.0, calc.mae
+  end
+
+  def test_csv_with_thousand_lines
+    orig_csv = csv_io('y_exp.csv')
+    pred_csv = csv_io('y_exp.csv')
+    
+    calc = Metrorb::Calculate.from_csvs(orig_csv, pred_csv)
+    assert_equal 1.0, calc.acc
+    assert_equal 0.0, calc.mae
+    assert_equal 1.0, calc.f1s
+  end
+
 end
 
 class MetrorbModuleTest < Minitest::Test

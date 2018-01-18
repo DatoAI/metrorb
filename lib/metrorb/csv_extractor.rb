@@ -26,15 +26,33 @@ module Metrorb
     private
 
     # O(n²)
+    # def merge(left, right)
+    #   left.each do |lrow|
+    #     right.each do |rrow|
+    #       if rrow[@id] == lrow[@id]
+    #         lrow << [@val2, rrow[@val1]]
+    #         next
+    #       end
+    #     end
+    #   end
+    # end
+
     def merge(left, right)
-      left.each do |lrow|
-        right.each do |rrow|
-          if rrow[@id] == lrow[@id]
-            lrow << [@val2, rrow[@val1]]
+      if left[@id].eql?(right[@id]) #se vetores id iguais
+        left.each_with_index do |lrow, index|
+          lrow << [@val2, right[index][@val1]]
+          next
+        end  
+      else
+        ids_left = left[@id] - right[@id] #ids que tem em left que não tem em right
+        left.each do |lrow|
+          unless ([lrow[@id]] - ids_left).empty?
+            lrow << [@val2, lrow[@val1]]
             next
-          end
-        end
-      end
+          end 
+        end  
+      end  
     end
+    
   end
 end

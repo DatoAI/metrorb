@@ -38,13 +38,13 @@ module Metrorb
     # end
 
     def merge(left, right)
-      if left[@id].eql?(right[@id]) #se vetores id iguais
+      if left[@id].eql?(right[@id]) #if the ids of the vectors are equal
         left.each_with_index do |lrow, index|
           lrow << [@val2, right[index][@val1]]
           next
         end  
       else
-        ids_left = left[@id] - right[@id] #ids que tem em left que não tem em right
+        ids_left = left[@id] - right[@id] #ids that have in left that do not have in right
         left.each do |lrow|
           unless ([lrow[@id]] - ids_left).empty?
             lrow << [@val2, lrow[@val1]]

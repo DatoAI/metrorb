@@ -6,11 +6,11 @@ require 'metrorb/version'
 Gem::Specification.new do |spec|
   spec.name          = 'metrorb'
   spec.version       = Metrorb::VERSION
-  spec.authors       = ['Oscar Esgalha']
-  spec.email         = ['oscaresgalha@gmail.com']
+  spec.authors       = ['Oscar Esgalha', 'Erisson Peixoto']
+  spec.email         = ['oscaresgalha@gmail.com', 'erisson06@gmail.com']
 
   spec.summary       = 'A collection of error metrics'
-  spec.homepage      = 'https://github.com/oesgalha/metrorb'
+  spec.homepage      = 'https://github.com/DatoAI/metrorb'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

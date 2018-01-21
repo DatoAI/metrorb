@@ -32,6 +32,7 @@ class CalculateTest < Minitest::Test
   end
 
   def test_it_calculates_f1score_from_arrays
+    assert_equal 0.0,                calc_from_arrays(:f1s, [1, 1, 1, 0, 0] , [0, 0, 0, 1, 1])
     assert_equal 0.8571428571428571, calc_from_arrays(:f1s, [0, 1, 1, 0, 1] , [1, 1, 1, 0, 1])
     assert_equal 1.0,                calc_from_arrays(:f1s, [1, 1, 0, 0, 0] , [1, 1, 0, 0, 0])
     assert_equal 0.6666666666666666, calc_from_arrays(:f1s, [1, 1, 0, 0, 0] , [1, 1, 1, 1, 0])

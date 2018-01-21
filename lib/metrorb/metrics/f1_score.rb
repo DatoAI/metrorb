@@ -2,10 +2,21 @@ module Metrorb
   module Metrics
     class F1Score < Metric
       def measure
-        $positive_class = 0
-        reduce_pair { |sum, orig, pred| $positive_class += 1 if pred == 1 
+        $y_pred_positive = 0
+        $y_true_positive = 0
+        precision = reduce_pair { |sum, orig, pred| $y_pred_positive += 1 if pred == 1 
           sum + ((pred == 1 && orig == pred) ? 1 : 0)
-        } / $positive_class.to_f
+        } / $y_pred_positive.to_f 
+        
+        recall = reduce_pair { |sum, orig, pred| $y_true_positive += 1 if orig == 1 
+          sum + ((orig == 1 && orig == pred) ? 1 : 0)
+        } / $y_true_positive.to_f 
+        
+        if precision + recall == 0
+          return 0.0  
+        end
+
+        2 * (precision * recall) / (precision + recall)
       end
 
       def self.abbr

@@ -32,9 +32,9 @@ class CalculateTest < Minitest::Test
   end
 
   def test_it_calculates_f1score_from_arrays
-    assert_equal 0.75, calc_from_arrays(:f1s, [0, 1, 1, 0, 1] , [1, 1, 1, 0, 1])
-    assert_equal 1.0, calc_from_arrays(:f1s, [1, 1, 0, 0, 0] , [1, 1, 0, 0, 0])
-    assert_equal 0.50, calc_from_arrays(:f1s, [1, 1, 0, 0, 0] , [1, 1, 1, 1, 0])
+    assert_equal 0.8571428571428571, calc_from_arrays(:f1s, [0, 1, 1, 0, 1] , [1, 1, 1, 0, 1])
+    assert_equal 1.0,                calc_from_arrays(:f1s, [1, 1, 0, 0, 0] , [1, 1, 0, 0, 0])
+    assert_equal 0.6666666666666666, calc_from_arrays(:f1s, [1, 1, 0, 0, 0] , [1, 1, 1, 1, 0])
   end
 
   def test_it_calculates_mae_from_csvs
@@ -99,7 +99,7 @@ class CsvExtractorTest < Minitest::Test
   def test_csv_with_thousand_lines
     orig_csv = csv_io('y_exp.csv')
     pred_csv = csv_io('y_exp.csv')
-    
+  
     calc = Metrorb::Calculate.from_csvs(orig_csv, pred_csv)
     assert_equal 1.0, calc.acc
     assert_equal 0.0, calc.mae
@@ -153,5 +153,15 @@ class MeanAbsoluteErrorTest < Minitest::Test
 
   def test_it_has_a_sort_direction
     assert_equal :asc, Metrorb::Metrics::MeanAbsoluteError.sort_direction
+  end
+end
+
+class F1ScoreTest < Minitest::Test
+  def test_it_has_a_name
+    assert_equal 'F1 Score', Metrorb::Metrics::F1Score.name
+  end
+
+  def test_it_has_a_sort_direction
+    assert_equal :desc, Metrorb::Metrics::F1Score.sort_direction
   end
 end
